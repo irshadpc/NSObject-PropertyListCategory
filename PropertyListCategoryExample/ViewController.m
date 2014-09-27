@@ -10,7 +10,7 @@
 #import "NSObject+PropertyList.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UILabel *saveStatusLabel;
 @end
 
 @implementation ViewController
@@ -19,28 +19,38 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    
+    NSString *nameOfPropertyListFile = @"FavoriteWords";
+    
+    
+     // Example: Save a collection as a property list
+    NSDictionary *testDictionary = @{@"myFavoriteWords":@[@"bungalow",@"antediluvian",@"uncowed",@"debelo"]};
+    
+    if ([self saveCollection:testDictionary asPropertyList:nameOfPropertyListFile andSkipBackup:NO]) {
+        self.saveStatusLabel.text = @"successful save";
+    } else {
+        self.saveStatusLabel.text = @"did not save";
+    }
+    
+    
     /*
-    NSDictionary *testDictionary = @{@"password":@"michael"};
-    
-    if ([self saveDictionary:testDictionary asPropertyList:@"Password"]) {
-        NSLog(@"successful save");
-    } else {
-        NSLog(@"did not save");
-    }
-     */
-    
-    id object = [self objectFromPropertyList:@"Password" inDocumentsRoot:NO];
+     // Example: Loading a collection from a property list
+    id object = [self objectFromPropertyList:nameOfPropertyListFile inDocumentsRoot:NO];
     if (object) {
-        NSLog(@"%@",object);
+        self.saveStatusLabel.text = [NSString stringWithFormat:@"Test Loading Property List #1: %@",object];
     }
+    */
     
-    id object2 = [self objectFromPropertyList:@"Password" inFolder:@"Password"];
+    /*
+     // Example: Loading a collection from a property list in a specific Documents sub-folder
+    id object2 = [self objectFromPropertyList:nameOfPropertyListFile inFolder:@"Non-Existant Folder"];
     if (object2) {
-        NSLog(@"%@",object2);
+        self.saveStatusLabel.text = [NSString stringWithFormat:@"Test Loading Property List #2: %@",object2];
     } else {
-        NSLog(@"see error");
+        self.saveStatusLabel.text = @"object is nil, so there was an error. check the debugger console.";
     }
-    
+    */
+
 }
 
 - (void)didReceiveMemoryWarning {
