@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "NSObject+PropertyList.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    /*
+    NSDictionary *testDictionary = @{@"password":@"michael"};
+    
+    if ([self saveDictionary:testDictionary asPropertyList:@"Password"]) {
+        NSLog(@"successful save");
+    } else {
+        NSLog(@"did not save");
+    }
+     */
+    
+    id object = [self objectFromPropertyList:@"Password" inDocumentsRoot:NO];
+    if (object) {
+        NSLog(@"%@",object);
+    }
+    
+    id object2 = [self objectFromPropertyList:@"Password" inFolder:@"Password"];
+    if (object2) {
+        NSLog(@"%@",object2);
+    } else {
+        NSLog(@"see error");
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
